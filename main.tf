@@ -76,7 +76,7 @@ data "google_client_config" "this" {}
 resource "kubernetes_service_account" "devtron_deployer" {
   metadata {
     name      = "devtron-deployer"
-    namespace = "kube-system"
+    namespace = "default"
   }
   depends_on = [google_container_cluster.this]
 }
@@ -100,7 +100,7 @@ resource "kubernetes_cluster_role_binding" "devtron_deployer" {
 resource "kubernetes_secret" "devtron_deployer_token" {
   metadata {
     name      = "devtron-deployer-token"
-    namespace = "kube-system"
+    namespace = "default"
     annotations = {
       "kubernetes.io/service-account.name" = kubernetes_service_account.devtron_deployer.metadata[0].name
     }
